@@ -20,5 +20,5 @@ echo -e "server {
     location /hbnb_static {
         alias /data/web_static/current;
     }
-}" | sudo tee $f
+}" | sudo tee -a $f
 sudo service nginx restart
