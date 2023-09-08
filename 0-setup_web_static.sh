@@ -9,6 +9,7 @@ echo -e "Fake text testing nginx config\n" | sudo tee /data/web_static/releases/
 sudo ln -sf /data/web_static/releases/test /data/web_static/current
 sudo chown ubuntu:ubuntu -R /data
 f=/etc/nginx/sites-available/default
+sudo rm $f
 echo -e "server {
     listen 80 default_server;
     root /usr/share/nginx/html;
@@ -20,5 +21,5 @@ echo -e "server {
     location /hbnb_static {
         alias /data/web_static/current;
     }
-}" | sudo tee -a $f
+}" | sudo tee $f
 sudo service nginx restart
