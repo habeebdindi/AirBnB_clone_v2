@@ -125,6 +125,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         new_instance = HBNBCommand.classes[classname]()
+        new_instance.save()
         parameters = parseline[1:]
         for param in parameters:
             key_val = param.split('=')
