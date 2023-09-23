@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import json
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -128,11 +129,15 @@ class HBNBCommand(cmd.Cmd):
         for param in parameters:
             key_val = param.split('=')
             key, value = key_val
-            value = value.strip('"').replace('_', ' ').replace(r'\"', '"')
-            if re.match(r'^\d+\.\d+$', value):
-                value = float(value)
-            elif re.match(r'^\d+$', value):
+            if value.isdigit():
                 value = int(value)
+            elif not value.isdigit() and '.' in value:
+                try:
+                    value = float(value)
+                except ValueError:
+                    pass
+            else:
+                value = value.strip('"').replace('_', ' ').replace(r'\"', '')
             setattr(new_instance, key, value)
             storage.save()
         print(new_instance.id)
@@ -224,7 +229,7 @@ class HBNBCommand(cmd.Cmd):
             for k, v in storage._FileStorage__objects.items():
                 print_list.append(str(v))
 
-        print(print_list)
+        print(json.loads(str(print_list)))
 
     def help_all(self):
         """ Help information for the all command """
