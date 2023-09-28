@@ -42,8 +42,8 @@ class DBStorage:
         else:
             for clas in classes:
                 obj_l.extend([obj for obj in self.__session.query(clas).all()])
-            obj_d = {f"{obj.__class__.__name__}.{obj.id}":
-                     obj for obj in obj_l}
+        obj_d = {f"{obj.__class__.__name__}.{obj.id}":
+                 obj for obj in obj_l}
         return obj_d
 
     def new(self, obj):
