@@ -62,3 +62,8 @@ class FileStorage:
             if obj == v:
                 del self.__objects[k]
                 break
+
+    def close(self):
+        """call reload() method for deserializing the JSON file to objects.
+        """
+        self.reload()
