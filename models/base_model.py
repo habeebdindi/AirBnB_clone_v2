@@ -25,8 +25,6 @@ class BaseModel:
             self.updated_at = datetime.now()
 
         else:
-            for key, value in kwargs.items():
-                setattr(self, key, value)
             kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
             kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
@@ -47,13 +45,10 @@ class BaseModel:
         storage.new(self)
         storage.save()
 
-
     def to_dict(self):
         """Convert instance into dict format"""
         dictionary = {}
         dictionary.update(self.__dict__)
-        if '_sa_instance_state' in dictionary:
-            del dictionary['_sa_instance_state']
         dictionary.update({'__class__':
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()

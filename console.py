@@ -126,7 +126,6 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         new_instance = HBNBCommand.classes[classname]()
-        storage.save()
         parameters = parseline[1:]
         for param in parameters:
             key_val = param.split('=')
@@ -141,7 +140,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 value = value.strip('"').replace('_', ' ').replace(r'\"', '')
             setattr(new_instance, key, value)
-            storage.save()
+        new_instance.save()
         print(new_instance.id)
 
     def help_create(self):
@@ -222,15 +221,20 @@ class HBNBCommand(cmd.Cmd):
         """
         my_list = []
         if not args:
-            print([v for v in storage.all().values()])
+            print([str(v) for v in storage.all().values()])
             return
         try:
             line = args.split(" ")
             if line[0] not in self.classes.keys():
                 raise NameError()
-            print([v for v in storage.all(eval(line[0])).values()])
+            print([str(v) for v in storage.all(eval(line[0])).values()])
+            """objects = storage.all(eval(line[0])).values()"""
         except NameError:
             print("** class doesn't exist **")
+
+        """formatted_objects = [str(obj) for obj in objects]
+        print('[' + ', '.join(formatted_objects) + ']')"""
+
 
     def help_all(self):
         """ Help information for the all command """
