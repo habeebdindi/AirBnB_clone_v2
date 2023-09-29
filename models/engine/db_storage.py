@@ -8,6 +8,7 @@ from models.state import State
 from sqlalchemy.orm import sessionmaker, scoped_session
 from datetime import datetime
 from models.city import City
+from models.user import User
 
 
 class DBStorage:
@@ -35,7 +36,7 @@ class DBStorage:
         """
         obj_l = []
         obj_d = {}
-        classes = [City, State]
+        classes = [City, State, User]
 
         if cls is not None:
             obj_l.extend(self.__session.query(cls).all())
@@ -65,8 +66,6 @@ class DBStorage:
     def reload(self):
         """create current database session
         """
-        from models.state import State
-        from models.city import City
 
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)

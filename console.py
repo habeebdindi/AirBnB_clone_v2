@@ -130,6 +130,7 @@ class HBNBCommand(cmd.Cmd):
         for param in parameters:
             key_val = param.split('=')
             key, value = key_val
+            value = value.strip('"').replace('_', ' ').replace(r'\"', '')
             if value.isdigit():
                 value = int(value)
             elif not value.isdigit() and '.' in value:
@@ -137,8 +138,6 @@ class HBNBCommand(cmd.Cmd):
                     value = float(value)
                 except ValueError:
                     pass
-            else:
-                value = value.strip('"').replace('_', ' ').replace(r'\"', '')
             setattr(new_instance, key, value)
         new_instance.save()
         print(new_instance.id)
@@ -219,9 +218,11 @@ class HBNBCommand(cmd.Cmd):
         Exceptions:
             NameError: when there is no object taht has the name
         """
-        my_list = []
         if not args:
             print([str(v) for v in storage.all().values()])
+            """objects = storage.all().values()
+            formatted_objects = [str(obj) for obj in objects]
+            print('[' + ', '.join(formatted_objects) + ']')"""
             return
         try:
             line = args.split(" ")
