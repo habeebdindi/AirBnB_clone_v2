@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from datetime import datetime
 from models.city import City
 from models.user import User
-
+from models.place import Place
 
 class DBStorage:
     """new engine for db storage
@@ -36,7 +36,7 @@ class DBStorage:
         """
         obj_l = []
         obj_d = {}
-        classes = [City, State, User]
+        classes = [City, State, User, Place]
 
         if cls is not None:
             obj_l.extend(self.__session.query(cls).all())
