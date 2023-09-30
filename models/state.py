@@ -15,8 +15,9 @@ class State(BaseModel, Base):
     cities = relationship("City", cascade="all, delete-orphan",
                           backref="state")
 
-    """ For FileStorage, define a getter attribute for cities """
     @property
     def cities(self):
+        """For FileStorage, define a getter attribute for cities
+        """
         return [city for city in models.storage.all(City).values() if
                 city.state_id == self.id]
