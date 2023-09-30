@@ -11,6 +11,7 @@ from models.city import City
 from models.user import User
 from models.place import Place
 from models.review import Review
+from models.amenity import Amenity
 
 
 class DBStorage:
@@ -38,7 +39,7 @@ class DBStorage:
         """
         obj_l = []
         obj_d = {}
-        classes = [City, State, User, Place, Review]
+        classes = [City, State, User, Place, Review, Amenity]
 
         if cls is not None:
             obj_l.extend(self.__session.query(cls).all())
